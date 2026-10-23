@@ -35,17 +35,13 @@ function parseGeminiJson(rawText) {
  * if a specific model encounters temporary high demand (503), rate limit (429), or 404.
  */
 async function generateWithFallback(prompt) {
-  // Unique list of candidate models in priority order
+  // Unique list of active, supported candidate models in priority order
   const candidateModels = Array.from(
     new Set([
       config.geminiModel,
       'gemini-3.5-flash',
       'gemini-3.5-flash-lite',
       'gemini-3.8-flash',
-      'gemini-2.5-flash',
-      'gemini-2.0-flash',
-      'gemini-1.5-flash',
-      'gemini-1.5-pro',
     ])
   );
 

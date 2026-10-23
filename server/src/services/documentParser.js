@@ -14,7 +14,6 @@ async function extractWithGeminiOCR(buffer, mimetype, originalName) {
     );
   }
 
-  const model = getGeminiModel();
   const base64Data = buffer.toString('base64');
   const mime = mimetype || (originalName.endsWith('.pdf') ? 'application/pdf' : 'application/pdf');
 
@@ -35,18 +34,34 @@ CRITICAL RULES:
 - Do NOT add conversational commentary, greetings, or explanations.
 - Output ONLY the verbatim extracted resume text in clean Markdown format with standard headings.`;
 
-  const result = await model.generateContent([
-    {
-      inlineData: {
-        data: base64Data,
-        mimeType: mime,
-      },
-    },
-    { text: prompt },
-  ]);
+  const candidateModels = Array.from(
+    new Set([config.geminiModel, 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'])
+  );
 
-  const text = result.response.text();
-  return text ? text.trim() : '';
+  let lastError = null;
+
+  for (const modelName of candidateModels) {
+    try {
+      const model = getGeminiModel(modelName);
+      const result = await model.generateContent([
+        {
+          inlineData: {
+            data: base64Data,
+            mimeType: mime,
+          },
+        },
+        { text: prompt },
+      ]);
+
+      const text = result.response.text();
+      return text ? text.trim() : '';
+    } catch (err) {
+      lastError = err;
+      console.warn(`OCR model ${modelName} failed (${err.message?.slice(0, 80)}...). Trying fallback...`);
+    }
+  }
+
+  throw lastError || new Error('Could not extract text from document using OCR.');
 }
 
 /**
