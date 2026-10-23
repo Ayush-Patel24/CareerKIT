@@ -3,8 +3,8 @@
   background-color: #ffffff;
   color: #111827;
   width: 100%;
-  max-width: 800px;
-  min-height: 1050px;
+  max-width: 794px;
+  min-height: 1123px;
   margin: 0 auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e5e7eb;
@@ -14,17 +14,6 @@
   font-size: 13px;
   position: relative;
   transition: all 0.2s ease;
-}
-
-@media print {
-  .resume-paper {
-    box-shadow: none !important;
-    border: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
 }
 
 /* Bullet list rendering */
@@ -54,4 +43,98 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Page Break & Smart Pagination Rules */
+.ats-section,
+.prof-section,
+.compact-section,
+.modern-section {
+  break-inside: auto;
+}
+
+.ats-entry,
+.prof-entry,
+.compact-entry,
+.modern-entry,
+.modern-side-entry {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.ats-section-title,
+.prof-sec-heading,
+.compact-title,
+.modern-sec-title,
+.modern-side-title {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.pdf-page-break-spacer {
+  display: block;
+  clear: both;
+}
+
+/* Compact Fit Mode — Fits near-boundary resumes cleanly onto 1 page */
+.compact-fit.resume-paper,
+.compact-fit.ats-classic-root,
+.compact-fit.prof-root,
+.compact-fit.compact-root,
+.compact-fit.modern-root {
+  padding: 24px 32px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+.compact-fit .ats-header {
+  padding-bottom: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+.compact-fit .ats-name,
+.compact-fit .prof-name {
+  font-size: 20px !important;
+  margin-bottom: 2px !important;
+}
+
+.compact-fit .ats-section,
+.compact-fit .prof-section,
+.compact-fit .compact-section,
+.compact-fit .modern-section {
+  margin-bottom: 9px !important;
+}
+
+.compact-fit .ats-section-title,
+.compact-fit .prof-sec-heading,
+.compact-fit .compact-title,
+.compact-fit .modern-sec-title {
+  margin-bottom: 4px !important;
+}
+
+.compact-fit .ats-entries-list,
+.compact-fit .prof-entries,
+.compact-fit .compact-entries,
+.compact-fit .modern-entries {
+  gap: 6px !important;
+}
+
+.compact-fit .resume-bullets {
+  margin-top: 2px !important;
+}
+
+.compact-fit .resume-bullets li {
+  margin-bottom: 1.5px !important;
+  line-height: 1.32 !important;
+}
+
+@media print {
+  .resume-paper {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }

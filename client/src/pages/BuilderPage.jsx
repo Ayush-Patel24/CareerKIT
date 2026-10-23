@@ -4,7 +4,7 @@ import { useResume } from '../context/ResumeContext';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { TEMPLATES, getTemplateById } from '../templates';
-import { exportResumeToPDF, printResumeNative } from '../lib/pdfExport';
+import { exportResumeToPDF, printResumeNative, estimatePageCount } from '../lib/pdfExport';
 
 import PersonalInfoSection from '../components/builder/PersonalInfoSection';
 import SummarySection from '../components/builder/SummarySection';
@@ -52,6 +52,8 @@ export default function BuilderPage() {
   const [activeTab, setActiveTab] = useState('personal');
   const [mobileMode, setMobileMode] = useState('edit'); // 'edit' | 'preview'
   const [isExporting, setIsExporting] = useState(false);
+  const [fitToSinglePage, setFitToSinglePage] = useState(false);
+  const [estimatedPages, setEstimatedPages] = useState(1);
   const previewRef = useRef(null);
 
   // Sync template from URL query param if specified (e.g. /builder?template=modern)
@@ -82,10 +84,10 @@ export default function BuilderPage() {
   const handleDownloadPDF = async () => {
     if (!previewRef.current) return;
     setIsExporting(true);
-    toast.info('Generating high-resolution PDF...');
+    toast.info('Generating high-resolution 300 DPI A4 PDF...');
     try {
       const filename = `${(currentResume.title || 'Resume').replace(/\s+/g, '_')}.pdf`;
-      await exportResumeToPDF(previewRef.current, filename);
+      await exportResumeToPDF(previewRef.current, filename, { fitToSinglePage });
       toast.success('PDF downloaded successfully!');
     } catch (err) {
       console.error(err);
@@ -95,6 +97,13 @@ export default function BuilderPage() {
       setIsExporting(false);
     }
   };
+
+  useEffect(() => {
+    if (previewRef.current) {
+      const pages = estimatePageCount(previewRef.current);
+      setEstimatedPages(pages);
+    }
+  }, [currentResume.content, currentResume.templateId, fitToSinglePage]);
 
   const activeTemplateObj = getTemplateById(currentResume.templateId || 'classic');
   const TemplateComponent = activeTemplateObj.component;
@@ -296,28 +305,46 @@ export default function BuilderPage() {
           style={{ display: mobileMode === 'preview' || window.innerWidth >= 1024 ? 'flex' : 'none' }}
         >
           <div className="preview-controls-bar no-print">
-            <div className="template-selector-pill">
-              <span className="text-xs text-muted font-medium">Template:</span>
-              <select
-                className="template-select"
-                value={currentResume.templateId || 'classic'}
-                onChange={(e) => setTemplate(e.target.value)}
-                aria-label="Select resume template"
+            <div className="preview-controls-left">
+              <div className="template-selector-pill">
+                <span className="text-xs text-muted font-medium">Template:</span>
+                <select
+                  className="template-select"
+                  value={currentResume.templateId || 'classic'}
+                  onChange={(e) => setTemplate(e.target.value)}
+                  aria-label="Select resume template"
+                >
+                  {TEMPLATES.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name} ({t.category})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                type="button"
+                className={`fit-page-btn ${fitToSinglePage ? 'active' : ''}`}
+                onClick={() => setFitToSinglePage((prev) => !prev)}
+                title="Slightly tighten spacing to ensure resume fits cleanly on 1 page"
               >
-                {TEMPLATES.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.name} ({t.category})
-                  </option>
-                ))}
-              </select>
+                <span>{fitToSinglePage ? '✓ 1-Page Fit ON' : 'Fit to 1 Page'}</span>
+              </button>
             </div>
 
-            <span className="text-xs text-muted">A4 Preview • Live Synchronized</span>
+            <div className="preview-controls-right">
+              <span
+                className={`preview-page-pill ${estimatedPages === 1 ? 'one-page' : 'multi-page'}`}
+                title={estimatedPages === 1 ? 'Optimal single-page length for ATS and recruiters' : 'Multi-page resume length'}
+              >
+                ● {estimatedPages} {estimatedPages === 1 ? 'Page' : 'Pages'} (A4)
+              </span>
+            </div>
           </div>
 
           {/* Render Target for html2canvas / PDF Export */}
           <div className="preview-scale-wrapper print-only-container">
-            <div ref={previewRef} className="w-full">
+            <div ref={previewRef} className={`w-full ${fitToSinglePage ? 'compact-fit' : ''}`}>
               <TemplateComponent data={currentResume.content} />
             </div>
           </div>
