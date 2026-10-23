@@ -24,7 +24,7 @@ import './DashboardPage.css';
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { resumes, createResume, deleteResume, duplicateResume, selectResume } = useResume();
+  const { resumes, createResume, deleteResume, duplicateResume, selectResume, loading } = useResume();
   const toast = useToast();
 
   const [analyses, setAnalyses] = useState([]);
@@ -139,6 +139,21 @@ export default function DashboardPage() {
 
   const displayName =
     user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Job Seeker';
+
+  if (loading) {
+    return (
+      <div className="container page-content">
+        <div className="dashboard-skeleton-banner" />
+        <div className="dashboard-stats-grid">
+          {[1, 2, 3].map((i) => <div key={i} className="skeleton-stat-card skeleton-pulse" />)}
+        </div>
+        <div className="dashboard-skeleton-label skeleton-pulse" />
+        <div className="resumes-grid">
+          {[1, 2, 3].map((i) => <div key={i} className="skeleton-resume-card skeleton-pulse" />)}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container page-content">

@@ -215,7 +215,7 @@ export function ResumeProvider({ children }) {
 
     autoSaveTimerRef.current = setTimeout(() => {
       saveResume(currentResume).catch(() => {
-        // silent fallback
+        setSaveStatus('error');
       });
     }, 4000);
 

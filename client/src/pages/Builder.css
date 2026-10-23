@@ -67,6 +67,36 @@
   color: var(--text-muted);
 }
 
+.save-status-error {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger);
+  border: 1px solid var(--status-danger-border);
+}
+
+/* Guest Save Reminder Banner */
+.builder-guest-banner {
+  background-color: #fffbeb;
+  border-bottom: 1px solid #fde68a;
+  padding: var(--space-2) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: #92400e;
+  flex-wrap: wrap;
+}
+
+.builder-guest-banner-link {
+  font-weight: 600;
+  color: #b45309;
+  text-decoration: underline;
+}
+
+.builder-guest-banner-link:hover {
+  color: #92400e;
+}
+
 .builder-topbar-right {
   display: flex;
   align-items: center;

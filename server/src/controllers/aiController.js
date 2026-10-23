@@ -1,4 +1,9 @@
 import { geminiService } from '../services/geminiService.js';
+import {
+  validateResumeText,
+  validateJobDescription,
+  validateBulletText,
+} from '../validators/resumeValidator.js';
 
 export const aiController = {
   // Analyze Resume
@@ -6,18 +11,9 @@ export const aiController = {
     try {
       const { resumeText, jobDescription, resumeTitle } = req.body;
 
-      if (!resumeText || typeof resumeText !== 'string' || resumeText.trim().length < 30) {
-        return res.status(400).json({
-          success: false,
-          error: 'Resume text is required and must contain at least 30 characters.',
-        });
-      }
-
-      if (resumeText.length > 50000) {
-        return res.status(400).json({
-          success: false,
-          error: 'Resume text exceeds maximum allowed length (50,000 characters).',
-        });
+      const validation = validateResumeText(resumeText);
+      if (!validation.valid) {
+        return res.status(400).json({ success: false, error: validation.error });
       }
 
       const analysis = await geminiService.analyzeResume({
@@ -61,11 +57,9 @@ export const aiController = {
     try {
       const { bulletText, role, company } = req.body;
 
-      if (!bulletText || typeof bulletText !== 'string' || bulletText.trim().length < 3) {
-        return res.status(400).json({
-          success: false,
-          error: 'Bullet text is required to improve.',
-        });
+      const validation = validateBulletText(bulletText);
+      if (!validation.valid) {
+        return res.status(400).json({ success: false, error: validation.error });
       }
 
       const result = await geminiService.improveBullet({
@@ -88,11 +82,13 @@ export const aiController = {
     try {
       const { resumeText, jobDescription } = req.body;
 
-      if (!resumeText || !jobDescription) {
-        return res.status(400).json({
-          success: false,
-          error: 'Both resume text and job description are required for matching.',
-        });
+      const resumeValidation = validateResumeText(resumeText);
+      if (!resumeValidation.valid) {
+        return res.status(400).json({ success: false, error: resumeValidation.error });
+      }
+      const jdValidation = validateJobDescription(jobDescription);
+      if (!jdValidation.valid) {
+        return res.status(400).json({ success: false, error: jdValidation.error });
       }
 
       const result = await geminiService.matchJobDescription({

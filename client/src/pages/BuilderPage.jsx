@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useResume } from '../context/ResumeContext';
+import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { TEMPLATES, getTemplateById } from '../templates';
 import { exportResumeToPDF, printResumeNative } from '../lib/pdfExport';
@@ -36,6 +37,7 @@ export default function BuilderPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const toast = useToast();
+  const { user } = useAuth();
   const {
     currentResume,
     updateCurrentResume,
@@ -136,11 +138,14 @@ export default function BuilderPage() {
                 ? 'save-status-saved'
                 : saveStatus === 'saving'
                 ? 'save-status-saving'
+                : saveStatus === 'error'
+                ? 'save-status-error'
                 : 'save-status-unsaved'
             }`}
           >
             {saveStatus === 'saved' && <><Check size={12} /> Saved</>}
             {saveStatus === 'saving' && 'Saving...'}
+            {saveStatus === 'error' && '⚠ Save failed — changes in browser'}
             {saveStatus === 'unsaved' && 'Unsaved changes'}
           </span>
         </div>
@@ -195,6 +200,15 @@ export default function BuilderPage() {
           </Button>
         </div>
       </div>
+
+      {/* Guest save reminder banner */}
+      {!user && (
+        <div className="builder-guest-banner no-print">
+          <span>💾 Your resume is saved in this browser only.</span>
+          <Link to="/signup" className="builder-guest-banner-link">Create a free account</Link>
+          <span>to save it to the cloud and access it anywhere.</span>
+        </div>
+      )}
 
       {/* Main Split Layout */}
       <div className="builder-split-body">

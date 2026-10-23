@@ -35,7 +35,7 @@ CRITICAL RULES:
 - Output ONLY the verbatim extracted resume text in clean Markdown format with standard headings.`;
 
   const candidateModels = Array.from(
-    new Set([config.geminiModel, 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'])
+    new Set([config.geminiModel, 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'])
   );
 
   let lastError = null;
