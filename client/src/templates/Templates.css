@@ -1,0 +1,57 @@
+/* Shared Resume Print & Page Styles */
+.resume-paper {
+  background-color: #ffffff;
+  color: #111827;
+  width: 100%;
+  max-width: 800px;
+  min-height: 1050px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+  font-size: 13px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+@media print {
+  .resume-paper {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* Bullet list rendering */
+.resume-bullets {
+  margin: 4px 0 0 18px;
+  padding: 0;
+  list-style-type: disc;
+}
+
+.resume-bullets li {
+  margin-bottom: 3px;
+  line-height: 1.4;
+  color: #374151;
+}
+
+/* Common Contact Links */
+.resume-contact-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.resume-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

@@ -1,0 +1,241 @@
+.modern-root {
+  display: flex;
+  min-height: 1050px;
+}
+
+.modern-sidebar {
+  width: 32%;
+  background-color: #fafafa;
+  border-right: 1px solid #e5e7eb;
+  padding: 36px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.modern-avatar-badge {
+  width: 50px;
+  height: 50px;
+  background-color: #111827;
+  color: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.modern-side-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-side-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+  margin: 0 0 10px 0;
+}
+
+.modern-side-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modern-side-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #4b5563;
+  word-break: break-word;
+}
+
+.modern-side-contact-item a {
+  color: #111827;
+  text-decoration: none;
+}
+
+.modern-side-contact-item a:hover {
+  text-decoration: underline;
+}
+
+.modern-side-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modern-side-entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-side-entry-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.modern-side-entry-sub {
+  font-size: 11px;
+  color: #4b5563;
+  margin: 1px 0 0 0;
+}
+
+.modern-side-entry-date {
+  font-size: 10.5px;
+  color: #6b7280;
+}
+
+.modern-side-entry-detail {
+  font-size: 10.5px;
+  color: #4b5563;
+  margin: 2px 0 0 0;
+}
+
+.modern-side-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modern-skill-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modern-skill-group-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.modern-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.modern-tag {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  color: #374151;
+}
+
+.modern-bullet-list {
+  margin: 0;
+  padding-left: 14px;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.modern-bullet-list li {
+  margin-bottom: 4px;
+}
+
+/* Main Content */
+.modern-main {
+  width: 68%;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modern-header {
+  border-bottom: 1.5px solid #111827;
+  padding-bottom: 12px;
+}
+
+.modern-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.modern-headline {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #4b5563;
+  margin: 4px 0 0 0;
+}
+
+.modern-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-sec-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #111827;
+  margin: 0 0 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 2px;
+}
+
+.modern-summary-text {
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.modern-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modern-entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.modern-entry-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.modern-entry-role {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.modern-entry-company {
+  font-size: 12px;
+  color: #4b5563;
+  margin: 1px 0 0 0;
+}
+
+.modern-entry-date {
+  font-size: 11px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.modern-entry-tag {
+  font-size: 11px;
+  color: #6b7280;
+  font-style: italic;
+}

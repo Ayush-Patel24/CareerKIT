@@ -1,0 +1,165 @@
+.compact-root {
+  padding: 26px 32px;
+  color: #1f2937;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.35;
+  font-size: 12px;
+}
+
+.compact-header {
+  border-bottom: 1.5px solid #111827;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.compact-header-main {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.compact-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.compact-headline {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.compact-contact-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.compact-contact-line a {
+  color: #111827;
+  text-decoration: underline;
+}
+
+.compact-section {
+  margin-bottom: 10px;
+}
+
+.compact-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #111827;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 1px;
+  margin: 0 0 5px 0;
+}
+
+.compact-summary {
+  font-size: 11.5px;
+  color: #374151;
+  line-height: 1.4;
+  margin: 0;
+  text-align: justify;
+}
+
+.compact-skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11.5px;
+}
+
+.compact-skill-row {
+  line-height: 1.35;
+}
+
+.compact-skill-label {
+  font-weight: 600;
+  color: #111827;
+}
+
+.compact-skill-text {
+  color: #374151;
+}
+
+.compact-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.compact-entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.compact-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11.5px;
+}
+
+.compact-entry-title-box {
+  color: #111827;
+}
+
+.compact-muted {
+  color: #4b5563;
+}
+
+.compact-location {
+  color: #6b7280;
+  font-size: 10.5px;
+}
+
+.compact-date {
+  font-size: 10.5px;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+.compact-bullets {
+  margin: 2px 0 0 14px;
+  padding: 0;
+  list-style-type: disc;
+}
+
+.compact-bullets li {
+  margin-bottom: 2px;
+  font-size: 11.5px;
+  color: #374151;
+  line-height: 1.35;
+}
+
+.compact-tech {
+  font-size: 10.5px;
+  color: #4b5563;
+  font-style: italic;
+}
+
+.compact-gpa {
+  font-size: 10.5px;
+  color: #4b5563;
+}
+
+.compact-additional-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+}
+
+.compact-add-line {
+  color: #374151;
+}
+
+.compact-add-line strong {
+  color: #111827;
+}
