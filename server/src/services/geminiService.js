@@ -1,4 +1,4 @@
-import { getGeminiModel } from '../config/gemini.js';
+import { getGeminiModel, sleep } from '../config/gemini.js';
 import { config } from '../config/env.js';
 
 /**
@@ -48,25 +48,39 @@ async function generateWithFallback(prompt) {
   let lastError = null;
 
   for (const modelName of candidateModels) {
-    try {
-      const model = getGeminiModel(modelName);
-      const result = await model.generateContent(prompt);
-      const responseText = result.response.text();
-      return parseGeminiJson(responseText);
-    } catch (err) {
-      lastError = err;
-      const isTemporary =
-        err.message?.includes('503') ||
-        err.message?.includes('429') ||
-        err.message?.includes('404') ||
-        err.message?.includes('high demand') ||
-        err.message?.includes('RESOURCE_EXHAUSTED');
+    // Retry the same model with exponential backoff before falling to the next one
+    const maxAttemptsPerModel = 2;
 
-      if (isTemporary) {
-        console.warn(`Model ${modelName} unavailable (${err.message.slice(0, 80)}...). Trying next fallback model...`);
-        continue;
+    for (let attempt = 1; attempt <= maxAttemptsPerModel; attempt++) {
+      try {
+        const model = getGeminiModel(modelName);
+        const result = await model.generateContent(prompt);
+        const responseText = result.response.text();
+        return parseGeminiJson(responseText);
+      } catch (err) {
+        lastError = err;
+        const isTemporary =
+          err.message?.includes('503') ||
+          err.message?.includes('429') ||
+          err.message?.includes('404') ||
+          err.message?.includes('high demand') ||
+          err.message?.includes('RESOURCE_EXHAUSTED');
+
+        if (!isTemporary) throw err;
+
+        if (attempt < maxAttemptsPerModel) {
+          const backoffMs = 1000 * Math.pow(2, attempt - 1); // 1s, 2s, ...
+          console.warn(
+            `Model ${modelName} temporarily unavailable (attempt ${attempt}/${maxAttemptsPerModel}): ${err.message.slice(0, 80)}... Retrying in ${backoffMs}ms...`
+          );
+          await sleep(backoffMs);
+          continue;
+        }
+
+        console.warn(
+          `Model ${modelName} still unavailable after ${attempt} attempts (${err.message.slice(0, 80)}...). Trying next fallback model...`
+        );
       }
-      throw err;
     }
   }
 

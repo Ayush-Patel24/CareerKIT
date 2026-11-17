@@ -25,7 +25,15 @@ export function getGeminiModel(modelName = config.geminiModel) {
     model: modelName,
     generationConfig: {
       temperature: 0.2, // Low temperature for consistent, analytical evaluations
-      maxOutputTokens: 2500,
+      maxOutputTokens: 4096,
+      responseMimeType: 'application/json', // Force valid JSON output from the model
     },
   });
+}
+
+/**
+ * Exponential backoff helper used between fallback model retries.
+ */
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
